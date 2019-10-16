@@ -9,15 +9,15 @@ const colors = ["red","pink","purple","deep-purple","indigo","blue","light-blue"
 // nicer, I think, list
 const colors = ["indigo","blue","cyan","light-blue","teal","light-green","blue-grey"];
 
-Vue.filter('maxText', function(text) {
-	//remove html
-	text = text.replace(/<.*?>/gi,'');
-	if(text.length > 500) text = text.substr(0,500);
-	return text;
-});
+
 
 let app = new Vue({
 	el: '#app',
+  vuetify: new Vuetify({
+    theme:{
+      dark:true,
+    },
+  }),
 	data() {
 		return {
 			drawer:true,
@@ -47,7 +47,6 @@ let app = new Vue({
 			items = items.sort((a, b) => {
 				return new Date(b.isoDate) - new Date(a.isoDate);
 			});
-
 			return items;
 		}
 	},
@@ -78,7 +77,7 @@ let app = new Vue({
 				.then(res => res.json())
 				.then(res => {
 					// ok for now, assume no error, cuz awesome
-					this.addURL = '';
+					//this.addURL = '';
 
 					//assign a color first
 					res.feed.color = colors[this.feeds.length % (colors.length-1)];
@@ -95,6 +94,7 @@ let app = new Vue({
 
 					// add the original rss link
 					res.feed.rsslink = this.addURL;
+
 
 					this.feeds.push(res.feed);
 					this.addFeedDialog = false;
